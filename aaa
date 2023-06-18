@@ -1,0 +1,82 @@
+use Northwind
+use final 
+
+SELECT * FROM Urunler
+--yeni ürün ekleme--
+
+GO
+CREATE PROCEDURE EkleUrun
+    @UrunAdi VARCHAR(50),
+    @MusteriId INT,
+    @kategoriFiyat INT,
+    @BirimFiyat DECIMAL(10,2),
+    @Stok INT
+AS
+BEGIN
+    INSERT INTO Urun (UrunAdi, MusteriId, kategoriFiyat, BirimFiyat, Stok) 
+    VALUES (@UrunAdi, @MusteriId, @kategoriFiyat, @BirimFiyat, @Stok);
+END;
+-- ürün güncelleme--
+CREATE PROCEDURE GuncelleUrun(
+    @MusteriId INT,
+    @BirimFiyat DECIMAL(10,2),
+    @Stok INT
+)
+AS
+BEGIN
+    UPDATE Urun 
+    SET BirimFiyat = @BirimFiyat, Stok = @Stok
+    WHERE MusteriId = @MusteriId;
+END;
+
+--Ürün silme--
+CREATE PROCEDURE SilUrun(
+    @MusteriId INT
+)
+AS
+BEGIN
+    DELETE FROM Urun
+    WHERE MusteriID = @MusteriId;
+END;
+
+
+--Müşteri görüntüleme
+SELECT * FROM Musteri;
+
+--Yeni müşteri ekleme
+CREATE PROCEDURE EkleMusteri(
+    @MusteriId VARCHAR(50),
+    @MusteriAdi VARCHAR(100),
+    @iletisim VARCHAR(100),
+    @Address VARCHAR(100),
+    @sehir VARCHAR(50),
+    @Ulke VARCHAR(50)
+)
+AS
+BEGIN
+    INSERT INTO Musteriler (MusteriId, MusteriAdi, iletisim, Address, sehir, Ulke)
+    VALUES (@MusteriId, @MusteriAdi, @iletisim, @Address, @sehir, @Ulke);
+END;
+--Musteri güncelleme
+CREATE PROCEDURE GuncelleMusteri(
+    @MusteriId VARCHAR(50),
+    @KisiAdi VARCHAR(100),
+    @Sehir VARCHAR(50)
+)
+AS
+BEGIN
+    UPDATE Musteriler
+    SET KisiAdi = @KisiAdi, Sehir = @Sehir
+    WHERE MusteriId = @MusteriId;
+END;
+
+--Müsteri silme
+CREATE PROCEDURE SilMusteri(
+    @MusteriId VARCHAR(50)
+)
+AS
+BEGIN
+    DELETE FROM Musteriler
+    WHERE MusteriId = @MusteriId;
+END;
+
